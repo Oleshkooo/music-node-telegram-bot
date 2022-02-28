@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/Oleshkooo/telegram-bot-node-app#readme",
   "dependencies": {
-    "node-telegram-bot-api": "^0.56.0"
+    "node-fetch": "^2.6.7",
+    "node-telegram-bot-api": "^0.56.0",
+    "ytdl-core": "^4.10.1",
+    "ytsr": "^3.6.0"
   }
 }

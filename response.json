@@ -1,0 +1,44 @@
+{
+    type: 'video',
+    title: 'JavaScript Основы для Начинающих - Полный Курс за 6 часов [2020]',
+    id: 'Bluxbh9CaQ0',
+    url: 'https://www.youtube.com/watch?v=Bluxbh9CaQ0',
+    bestThumbnail: {
+      url: 'https://i.ytimg.com/vi/Bluxbh9CaQ0/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCf-jYVXEEKYLcNQg6gaJSSK3xqTA',
+      width: 720,
+      height: 404
+    },
+    thumbnails: [
+      {
+        url: 'https://i.ytimg.com/vi/Bluxbh9CaQ0/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCf-jYVXEEKYLcNQg6gaJSSK3xqTA',
+        width: 720,
+        height: 404
+      },
+      {
+        url: 'https://i.ytimg.com/vi/Bluxbh9CaQ0/hq720.jpg?sqp=-oaymwEjCOgCEMoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLC00ZjafF2F7_OI2WQ1Gjh9-cdiXA',
+        width: 360,
+        height: 202
+      }
+    ],
+    isUpcoming: false,
+    upcoming: null,
+    isLive: false,
+    badges: [],
+    author: {
+      name: 'Владилен Минин',
+      channelID: 'UCg8ss4xW9jASrqWGP30jXiw',
+      url: 'https://www.youtube.com/c/VladilenMinin',
+      bestAvatar: {
+        url: 'https://yt3.ggpht.com/TTUUbXQCoDs8cvUB_r2JmCu2XfCsJAB7Mi8YPiNs01TrxAZCxSxQo2xdgN1wUwGz9wEURAIT=s68-c-k-c0x00ffffff-no-rj',
+        width: 68,
+        height: 68
+      },
+      avatars: [ [Object] ],
+      ownerBadges: [ 'Verified' ],
+      verified: true
+    },
+    description: null,
+    views: 2294458,
+    duration: '5:47:27',
+    uploadedAt: '1 year ago'
+  }
