@@ -40,10 +40,7 @@ const start = () => {
             return await download(text, `fromLink${i}`, chatID)
         }
     
-        return (async () => {
-            await search(text, chatID)
-            text = ''
-        })
+        return await search(text, chatID)
     })
 }
 
