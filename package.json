@@ -1,0 +1,24 @@
+{
+  "name": "telegram-bot-node-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oleshkooo/telegram-bot-node-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oleshkooo/telegram-bot-node-app/issues"
+  },
+  "homepage": "https://github.com/Oleshkooo/telegram-bot-node-app#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.56.0"
+  }
+}
