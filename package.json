@@ -21,6 +21,7 @@
   "dependencies": {
     "node-fetch": "^2.6.7",
     "node-telegram-bot-api": "^0.56.0",
+    "telegraf": "^4.7.0",
     "ytdl-core": "^4.10.1",
     "ytsr": "^3.6.0"
   }
