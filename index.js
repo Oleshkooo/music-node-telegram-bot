@@ -11,6 +11,8 @@ const ytsr = require('ytsr')
 const TOKEN = '5168643575:AAEOJSu5V6dqUeh3dM1waGscnL-DNWpteCA'
 const bot = new Telegraf(TOKEN)
 
+const btn_1_word = '🔍 Search'
+
 
 
 // / === === === === ===
@@ -18,16 +20,15 @@ const bot = new Telegraf(TOKEN)
 
 
 // / === start
-bot.start(async msg => {
-    await msg.reply(`Hello, ${msg.message.from.first_name}`, Markup
+bot.start(async tg => {
+    await tg.reply(`👋🏼 Hello, ${tg.message.from.first_name}`, Markup
         .keyboard([
-            ['Search']
+            [btn_1_word]
         ])
         .resize()
     )
-    await msg.reply('You can download music here')
-    await msg.reply('Push the button to start')
-    // await msg.reply('Type /search to start')
+    await tg.reply('🎵 You can listen to music or download it here')
+    await tg.reply('🔴 Push the button to start')
 })
 
 
@@ -37,24 +38,25 @@ bot.start(async msg => {
 // / === search
 // * 1
 const search_1 = new Composer()
-search_1.on('text', async msg => {
-    await msg.reply('Send me the title of the song')
-    return msg.wizard.next()
+search_1.on('text', async tg => {
+    await tg.reply('🎵 Send me the title of the song')
+    return tg.wizard.next()
 })
 
 // * 2
 let results
 const search_2 = new Composer()
-search_2.on('text', async msg => {
-    let songTitle = msg.message.text
-    
-    // end if clicked search
-    if (songTitle == 'Search') {
-        msg.scene.leave()
-        return msg.scene.enter('searchScene')
-    }
+search_2.on('text', async tg => {
+    let songTitle = tg.message.text
 
-    msg.reply('Searching...')
+    // end if clicked search || cancel
+    if (songTitle == btn_1_word || songTitle == '/search') {
+        tg.scene.leave()
+        return tg.scene.enter('searchScene')
+    }
+    if (songTitle == '/cancel') return tg.scene.leave()
+
+    tg.reply('🔍 Searching...')
 
     results = await ytsr(songTitle, {
         limit: 5
@@ -62,8 +64,8 @@ search_2.on('text', async msg => {
 
     // end if nothing found
     if (results.items.length < 1) {
-        await msg.reply('Nothing found')
-        return msg.scene.leave()
+        await tg.reply('Nothing found')
+        return tg.scene.leave()
     }
 
     const resultsArr = []
@@ -71,15 +73,15 @@ search_2.on('text', async msg => {
         [Markup.button.callback(`${item.title} • ${item.duration || 'Live'}`, index)]
     ))
 
-    msg.reply('Choose the song from the list', Markup.inlineKeyboard(resultsArr).oneTime())
-    return msg.wizard.next()
+    tg.reply('🎶 Choose the song from the list', Markup.inlineKeyboard(resultsArr).oneTime())
+    return tg.wizard.next()
 })
 
 // * 3
 const search_3 = new Composer()
 // check
-const check = async (msg, action) => {
-    await msg.deleteMessage()
+const check = async (tg, action) => {
+    await tg.deleteMessage()
 
     let title = results.items[action].title
     let duration = results.items[action].duration
@@ -94,34 +96,35 @@ const check = async (msg, action) => {
         m = parseInt(duration.split(":")[1])
     }
 
+    // if song is too long
     if (h > 0 && m > 10) {
-        await msg.reply('This song is too long')
-        return msg.scene.leave()
+        await tg.reply('This song is too long')
+        return tg.scene.leave()
     }
-    
-    await msg.reply(`${title} • ${duration}`)
 
-    await download(msg, url, title)
+    await tg.reply(`🎧 ${title} • ${duration}`)
 
-    return msg.scene.leave()
+    await download(tg, url, title)
+
+    return tg.scene.leave()
 }
 // download & send
-const download = async (msg, url, fileNameInv) => {
+const download = async (tg, url, fileNameInv) => {
     let fileName = fileNameInv.replace(/[&\/\\#,+()$~%.'"`:*?|!@<>{}]/g, '').replace(/\s+/g, ' ')
 
     if (!ytdl.validateURL(url)) {
-        msg.reply('Error')
-        msg.reply('Try again later')
-        return msg.scene.leave()
+        tg.reply('😟 Error')
+        tg.reply('⏱ Try again later')
+        return tg.scene.leave()
     }
 
-    msg.reply('Downloading...')
+    tg.reply('⬇️ Downloading...')
     const writeableStream = fs.createWriteStream(`${fileName}.mp3`);
     writeableStream.on('finish', () => {
-        msg.replyWithAudio({source: `${fileName}.mp3`})
+        tg.replyWithAudio({source: `${fileName}.mp3`})
         .then(() => {
             fs.unlink(`${fileName}.mp3`, err => {
-                if (err) throw err
+                if (err) console.error(err)
             })
         })
     })
@@ -130,11 +133,11 @@ const download = async (msg, url, fileNameInv) => {
         format: "mp3",
     }).pipe(writeableStream)
 }
-search_3.action('0', async msg => check(msg, '0'))
-search_3.action('1', async msg => check(msg, '1'))
-search_3.action('2', async msg => check(msg, '2'))
-search_3.action('3', async msg => check(msg, '3'))
-search_3.action('4', async msg => check(msg, '4'))
+search_3.action('0', async tg => check(tg, '0'))
+search_3.action('1', async tg => check(tg, '1'))
+search_3.action('2', async tg => check(tg, '2'))
+search_3.action('3', async tg => check(tg, '3'))
+search_3.action('4', async tg => check(tg, '4'))
 
 
 const searchScene = new Scenes.WizardScene('searchScene', search_1, search_2, search_3)
@@ -143,7 +146,8 @@ bot.use(session())
 bot.use(stage.middleware())
 
 
-bot.hears('Search', msg => msg.scene.enter('searchScene'))
+bot.hears(btn_1_word, tg => tg.scene.enter('searchScene'))
+bot.command('search', tg => tg.scene.enter('searchScene'))
 
 
 
