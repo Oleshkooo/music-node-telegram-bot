@@ -1,6 +1,6 @@
 // ! console fixes
-process.env.NTBA_FIX_319 = 1;
-process.env.NTBA_FIX_350 = 1;
+process.env.NTBA_FIX_319 = 1
+process.env.NTBA_FIX_350 = 1
 
 // ! requirements
 const { Telegraf, Markup, Composer, Scenes, session } = require('telegraf')
